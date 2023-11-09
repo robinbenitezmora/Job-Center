@@ -45,5 +45,75 @@ public class AdminPanel extends JFrame implements ActionListener {
  }
 
  private void GUI() {
+  createMenus();
+  createComponents();
+  init();
+ }
+
+ private void init() {
+ }
+
+ private void createComponents() {
+ }
+
+ private void createMenus() {
+  menuBar_menubar = new JMenuBar();
+  recordMenu = new JMenu("Record");
+  viewMenu = new JMenu("View");
+  billMenu = new JMenu("Bill");
+  systemMenu = new JMenu("System");
+
+  addWorkerItem = new JMenuItem("New Worker");
+  recordMenu.add(addWorkerItem);
+  addWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  addRecordItem = new JMenuItem("New Record");
+  recordMenu.add(addRecordItem);
+  addRecordItem.addActionListener((java.awt.event.ActionListener) this);
+
+  addEmployerItem = new JMenuItem("New Employer");
+  recordMenu.add(addEmployerItem);
+  addEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  viewWorkerItem = new JMenuItem("View Worker");
+  viewMenu.add(viewWorkerItem);
+  viewWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  viewRecordItem = new JMenuItem("View Record");
+  viewMenu.add(viewRecordItem);
+  viewRecordItem.addActionListener((java.awt.event.ActionListener) this);
+
+  viewEmployerItem = new JMenuItem("View Employer");
+  viewMenu.add(viewEmployerItem);
+  viewEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  billWorkerItem = new JMenuItem("Bill Worker");
+  billMenu.add(billWorkerItem);
+  billWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  billEmployerItem = new JMenuItem("Bill Employer");
+  billMenu.add(billEmployerItem);
+  billEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+
+  settingItem = new JMenuItem("Setting");
+  systemMenu.add(settingItem);
+  settingItem.addActionListener((java.awt.event.ActionListener) this);
+
+  resetItem = new JMenuItem("Reset");
+  systemMenu.add(resetItem);
+  resetItem.addActionListener((java.awt.event.ActionListener) this);
+
+  logoutItem = new JMenuItem("Logout");
+  systemMenu.add(logoutItem);
+  logoutItem.addActionListener((java.awt.event.ActionListener) this);
+
+  menuBar_menubar.add(homePagMenu);
+  menuBar_menubar.add(recordMenu);
+  menuBar_menubar.add(viewMenu);
+
+  menuBar_menubar.add(billMenu);
+  menuBar_menubar.add(systemMenu);
+
+  setJMenuBar(menuBar_menubar);
  }
 }
