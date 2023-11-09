@@ -5,6 +5,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import java.awt.Component;
 import java.awt.Toolkit;
 
 public class AdminPanel extends JFrame implements ActionListener {
@@ -50,7 +51,24 @@ public class AdminPanel extends JFrame implements ActionListener {
  }
 
  private void createComponents() {
+  HomePage homepage = new HomePage();
 
+  AddWorker addWorker = new AddWorker();
+  AddRecord addRecord = new AddRecord();
+  AddEmployer addEmployer = new AddEmployer();
+
+  ViewWorker viewWorker = new ViewWorker();
+  ViewRecord viewRecord = new ViewRecord();
+  ViewEmployer viewEmployer = new ViewEmployer();
+
+  BillWorker billWorker = new BillWorker();
+  BillEmployer billEmployer = new BillEmployer();
+
+  Setting setting = new Setting();
+  Reset reset = new Reset();
+  Logout logout = new Logout();
+
+  components.add(homepage);
  }
 
  private void createMenus() {
