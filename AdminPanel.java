@@ -1,14 +1,11 @@
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import javafx.geometry.Insets;
 import java.awt.Toolkit;
-import javafx.geometry.Insets;
 
 public class AdminPanel extends JFrame implements ActionListener {
 
@@ -25,8 +22,6 @@ public class AdminPanel extends JFrame implements ActionListener {
  private JMenuItem addEmployerItem, addWorkerItem, addRecordItem, viewRecordItem;
  private JMenuItem viewEmployerItem, viewWorkerItem, billEmployerItem, billWorkerItem;
  private JMenuItem settingItem, resetItem, logoutItem;
- private HomePage homepage;
-
  private ArrayList<JPanel> components = new ArrayList<>();
  private int currentComponent = 6;
 
@@ -51,9 +46,11 @@ public class AdminPanel extends JFrame implements ActionListener {
  }
 
  private void init() {
+  setContentPane(components.get(currentComponent));
  }
 
  private void createComponents() {
+
  }
 
  private void createMenus() {
