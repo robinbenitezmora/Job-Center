@@ -46,10 +46,6 @@ public class AdminPanel extends JFrame implements ActionListener {
   init();
  }
 
- private void init() {
-  setContentPane(components.get(currentComponent));
- }
-
  private void createComponents() {
   HomePage homepage = new HomePage();
 
@@ -69,6 +65,41 @@ public class AdminPanel extends JFrame implements ActionListener {
   Logout logout = new Logout();
 
   components.add(homepage);
+
+  components.add(addWorker);
+  components.add(addRecord);
+  components.add(addEmployer);
+
+  components.add(viewWorker);
+  components.add(viewRecord);
+  components.add(viewEmployer);
+
+  components.add(billWorker);
+  components.add(billEmployer);
+
+  components.add(setting);
+  components.add(reset);
+  components.add(logout);
+
+  for (Component component : components) {
+   add(component);
+   component.setVisible(false);
+  }
+
+  addWorkerItem.setActionCommand("addWorker");
+  addRecordItem.setActionCommand("addRecord");
+  addEmployerItem.setActionCommand("addEmployer");
+
+  viewWorkerItem.setActionCommand("viewWorker");
+  viewRecordItem.setActionCommand("viewRecord");
+  viewEmployerItem.setActionCommand("viewEmployer");
+
+  billWorkerItem.setActionCommand("billWorker");
+  billEmployerItem.setActionCommand("billEmployer");
+
+  settingItem.setActionCommand("setting");
+  resetItem.setActionCommand("reset");
+  logoutItem.setActionCommand("logout");
  }
 
  private void createMenus() {
@@ -131,4 +162,9 @@ public class AdminPanel extends JFrame implements ActionListener {
 
   setJMenuBar(menuBar_menubar);
  }
+
 }
+
+ private void init() {
+  setContentPane(components.get(currentComponent));
+ }
