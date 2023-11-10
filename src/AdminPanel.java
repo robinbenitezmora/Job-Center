@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
