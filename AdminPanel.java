@@ -1,3 +1,7 @@
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -5,28 +9,39 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import java.awt.Component;
-import java.awt.Toolkit;
-
 public class AdminPanel extends JFrame implements ActionListener {
 
  private static final long serialVersionUID = 1L;
-
+ /**
+  * AdminPanel window width
+  */
  public static int W_FRAME = 960;
 
+ /**
+  * AdminPanel window height
+  */
  public static int H_FRAME = 2 * W_FRAME / 3;
 
- public static java.awt.Insets INSETS;
+ /**
+  * frame edge
+  */
+ public static Insets INSETS;
+
+ /**
+  * current settings
+  */
 
  private JMenuBar menuBar_menubar;
- private JMenu homePagMenu, recordMenu, viewMenu, billMenu, systemMenu;
- private JMenuItem addEmployerItem, addWorkerItem, addRecordItem, viewRecordItem;
- private JMenuItem viewEmployerItem, viewWorkerItem, billEmployerItem, billWorkerItem;
- private JMenuItem settingItem, resetItem, logoutItem;
+ private JMenu homePage_menu, record_menu, view_menu, bill_menu, system_menu;
+ private JMenuItem addEmployer_item, addWorker_item, addRecord_item, viewRecord_item;
+ private JMenuItem viewEmployer_item, viewWorker_item, billEmployer_item, billWorker_item;
+ private JMenuItem settings_item, reset_item, logout_item;
+ private HomePage homePage;
  private ArrayList<JPanel> components = new ArrayList<>();
  private int currentComponent = 6;
 
  public AdminPanel() {
+
   super("Registration System");
   setIconImage(Toolkit.getDefaultToolkit().getImage("src\\icons\\admin_user.png"));
   setSize(W_FRAME, H_FRAME);
@@ -34,137 +49,109 @@ public class AdminPanel extends JFrame implements ActionListener {
   setLayout(null);
   setLocationRelativeTo(null);
   setLocation(getX() - 40, getY() - 20);
-  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  setDefaultCloseOperation(EXIT_ON_CLOSE);
   setVisible(true);
+
   INSETS = getInsets();
+
   GUI();
+
  }
 
  private void GUI() {
+
   createMenus();
   createComponents();
   init();
- }
 
- private void createComponents() {
-  HomePage homepage = new HomePage();
-
-  AddWorker addWorker = new AddWorker();
-  AddRecord addRecord = new AddRecord();
-  AddEmployer addEmployer = new AddEmployer();
-
-  ViewWorker viewWorker = new ViewWorker();
-  ViewRecord viewRecord = new ViewRecord();
-  ViewEmployer viewEmployer = new ViewEmployer();
-
-  BillWorker billWorker = new BillWorker();
-  BillEmployer billEmployer = new BillEmployer();
-
-  Setting setting = new Setting();
-  Reset reset = new Reset();
-  Logout logout = new Logout();
-
-  components.add(homepage);
-
-  components.add(addWorker);
-  components.add(addRecord);
-  components.add(addEmployer);
-
-  components.add(viewWorker);
-  components.add(viewRecord);
-  components.add(viewEmployer);
-
-  components.add(billWorker);
-  components.add(billEmployer);
-
-  components.add(setting);
-  components.add(reset);
-  components.add(logout);
-
-  for (Component component : components) {
-   add(component);
-   component.setVisible(false);
-  }
-
-  addWorkerItem.setActionCommand("addWorker");
-  addRecordItem.setActionCommand("addRecord");
-  addEmployerItem.setActionCommand("addEmployer");
-
-  viewWorkerItem.setActionCommand("viewWorker");
-  viewRecordItem.setActionCommand("viewRecord");
-  viewEmployerItem.setActionCommand("viewEmployer");
-
-  billWorkerItem.setActionCommand("billWorker");
-  billEmployerItem.setActionCommand("billEmployer");
-
-  settingItem.setActionCommand("setting");
-  resetItem.setActionCommand("reset");
-  logoutItem.setActionCommand("logout");
  }
 
  private void createMenus() {
+
   menuBar_menubar = new JMenuBar();
-  recordMenu = new JMenu("Record");
-  viewMenu = new JMenu("View");
-  billMenu = new JMenu("Bill");
-  systemMenu = new JMenu("System");
 
-  addWorkerItem = new JMenuItem("New Worker");
-  recordMenu.add(addWorkerItem);
-  addWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+  homePage_menu = new JMenu("Home page");
+  record_menu = new JMenu("Record");
+  view_menu = new JMenu("View");
+  bill_menu = new JMenu("Bill");
+  system_menu = new JMenu("System");
 
-  addRecordItem = new JMenuItem("New Record");
-  recordMenu.add(addRecordItem);
-  addRecordItem.addActionListener((java.awt.event.ActionListener) this);
+  addWorker_item = new JMenuItem("New worker");
+  record_menu.add(addWorker_item);
+  addWorker_item.addActionListener(this);
 
-  addEmployerItem = new JMenuItem("New Employer");
-  recordMenu.add(addEmployerItem);
-  addEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+  addRecord_item = new JMenuItem("New record");
+  record_menu.add(addRecord_item);
+  addRecord_item.addActionListener(this);
 
-  viewWorkerItem = new JMenuItem("View Worker");
-  viewMenu.add(viewWorkerItem);
-  viewWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+  addEmployer_item = new JMenuItem("New employer");
+  record_menu.add(addEmployer_item);
+  addEmployer_item.addActionListener(this);
 
-  viewRecordItem = new JMenuItem("View Record");
-  viewMenu.add(viewRecordItem);
-  viewRecordItem.addActionListener((java.awt.event.ActionListener) this);
+  viewRecord_item = new JMenuItem("View record");
+  view_menu.add(viewRecord_item);
+  viewRecord_item.addActionListener(this);
 
-  viewEmployerItem = new JMenuItem("View Employer");
-  viewMenu.add(viewEmployerItem);
-  viewEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+  viewWorker_item = new JMenuItem("View worker");
+  view_menu.add(viewWorker_item);
+  viewWorker_item.addActionListener(this);
 
-  billWorkerItem = new JMenuItem("Bill Worker");
-  billMenu.add(billWorkerItem);
-  billWorkerItem.addActionListener((java.awt.event.ActionListener) this);
+  viewEmployer_item = new JMenuItem("View employer");
+  view_menu.add(viewEmployer_item);
+  viewEmployer_item.addActionListener(this);
 
-  billEmployerItem = new JMenuItem("Bill Employer");
-  billMenu.add(billEmployerItem);
-  billEmployerItem.addActionListener((java.awt.event.ActionListener) this);
+  billWorker_item = new JMenuItem("Worker payment");
+  bill_menu.add(billWorker_item);
+  billWorker_item.addActionListener(this);
 
-  settingItem = new JMenuItem("Setting");
-  systemMenu.add(settingItem);
-  settingItem.addActionListener((java.awt.event.ActionListener) this);
+  billEmployer_item = new JMenuItem("Employer payment");
+  bill_menu.add(billEmployer_item);
+  billEmployer_item.addActionListener(this);
 
-  resetItem = new JMenuItem("Reset");
-  systemMenu.add(resetItem);
-  resetItem.addActionListener((java.awt.event.ActionListener) this);
+  settings_item = new JMenuItem("Settings");
+  system_menu.add(settings_item);
+  settings_item.addActionListener(this);
 
-  logoutItem = new JMenuItem("Logout");
-  systemMenu.add(logoutItem);
-  logoutItem.addActionListener((java.awt.event.ActionListener) this);
+  reset_item = new JMenuItem("Reset");
+  system_menu.add(reset_item);
+  reset_item.addActionListener(this);
 
-  menuBar_menubar.add(homePagMenu);
-  menuBar_menubar.add(recordMenu);
-  menuBar_menubar.add(viewMenu);
+  logout_item = new JMenuItem("Logout");
+  system_menu.add(logout_item);
+  logout_item.addActionListener(this);
 
-  menuBar_menubar.add(billMenu);
-  menuBar_menubar.add(systemMenu);
+  menuBar_menubar.add(homePage_menu);
+  menuBar_menubar.add(record_menu);
+  menuBar_menubar.add(view_menu);
+  menuBar_menubar.add(bill_menu);
+  menuBar_menubar.add(system_menu);
 
   setJMenuBar(menuBar_menubar);
+
+ }
+
+ private void createComponents() {
+
+  homePage = new HomePage();
+
+  components.add(homePage);
+  components.add(new NewWorker());
+  components.add(new NewRecord());
+  components.add(new NewEmployer());
+  components.add(new ViewRecord());
+  components.add(new ViewWorker());
+  components.add(new ViewEmployer());
+
+ }
+
+ private void init() {
+
+  setContentPane(components.get(currentComponent));
+
+ }
+
+ @Override
+ public void actionPerformed(ActionEvent e) {
  }
 
 }
-
- private void init() {
-  setContentPane(components.get(currentComponent));
- }
