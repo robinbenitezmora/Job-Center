@@ -112,27 +112,58 @@ public class MyScrollPane extends JScrollPane {
     scrollbar.repaint();
    }
   });
-  getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
 
-  // import MyScrollBarUI class here
+  // Import MyScrollBarUI class here
 
-  getVerticalScrollBar().setUnitIncrement(16);
-  getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-  getHorizontalScrollBar().setUnitIncrement(16);
-  getViewport().setOpaque(false);
-  setOpaque(false);
-  setBorder(null);
-  setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-  setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-  setBounds(0, 0, vertical, horizontal);
-  setWheelScrollingEnabled(true);
-  setComponentZOrder(getVerticalScrollBar(), 0);
-  setComponentZOrder(getViewport(), 1);
-  getVerticalScrollBar().setOpaque(false);
+  public static class MyScrollPane extends JScrollPane {
 
-  // change the type of the argument passed to setUI() method to
-  // javax.swing.plaf.ScrollBarUI
-  getVerticalScrollBar().setUI((ScrollBarUI) new MyScrollBarUI());
-  getVerticalScrollBar().setUnitIncrement(16);
+   public MyScrollPane(Component a, int vertical, int horizontal) {
+
+    super(a, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+    setComponentZOrder(getVerticalScrollBar(), 0);
+    setComponentZOrder(getViewport(), 0);
+    getVerticalScrollBar().setOpaque(false);
+
+    setLayout(new ScrollPaneLayout() {
+     @Override
+     public void layoutContainer(Container parent) {
+      JScrollPane scrollPane = (JScrollPane) parent;
+
+      java.awt.Rectangle availR = scrollPane.getBounds();
+      availR.x = availR.y = 0;
+
+      java.awt.Insets insets = parent.getInsets();
+      availR.x = insets.left;
+      availR.y = insets.top;
+      availR.width -= insets.left + insets.right;
+      availR.height -= insets.top + insets.bottom;
+
+      Rectangle vsbR = new Rectangle();
+      vsbR.setRect(availR.x + availR.width - 12, availR.y, 12, availR.height);
+
+      if (viewport != null) {
+       viewport.setBounds(availR);
+      }
+      if (vsb != null) {
+       vsb.setVisible(true);
+       vsb.setBounds(vsbR);
+      }
+     }
+    });
+    getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+    getVerticalScrollBar().setUnitIncrement(16);
+    getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+    getHorizontalScrollBar().setUnitIncrement(16);
+
+    // ...
+
+    getVerticalScrollBar().setUI(new MyScrollBarUI());
+   }
+  }
+ }
+
+ public MyScrollPane(Component a) {
+  this(a, 0, 1);
  }
 }
