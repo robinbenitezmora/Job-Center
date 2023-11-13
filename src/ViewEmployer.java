@@ -174,13 +174,15 @@ public class ViewEmployer extends JPanel {
     JList<String> searchResultsList = new JList<String>(searchResultsListModel);
     searchResultsList.setBackground(new Color(220, 220, 220));
 
-    ((DefaultListCellRenderer)searchResultsList.getCellRenderer().setHorizontalAlignment(SwingConstants.CENTER);
+    DefaultListCellRenderer renderer = (DefaultListCellRenderer) searchResultsList.getCellRenderer();
+    renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
     searchResultsList.setFixedCellHeight(35);
     searchResultsList.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-          viewGUI((String) ((JList)e.getSource()).getSelectedValue());
+          viewGUI(searchResultsList.getSelectedValue());
         }
       }
     });
@@ -190,7 +192,8 @@ public class ViewEmployer extends JPanel {
     this.add(searchResultsScroll);
 
     JLabel scrollBottomInfo = new JLabel("Double click on the person you want to select");
-    scrollBottomInfo.setBounds(searchResultsScroll.getX(), searchResultsScroll.getY() + searchResultsScroll.getHeight(), searchResultsScroll.getWidth(), 12);
+    scrollBottomInfo.setBounds(searchResultsScroll.getX(), searchResultsScroll.getY() + searchResultsScroll.getHeight(),
+        searchResultsScroll.getWidth(), 12);
     scrollBottomInfo.setFont(new Font(Font.DIALOG, Font.ITALIC, 10));
     scrollBottomInfo.setForeground(new Color(0, 180, 0));
 
@@ -198,6 +201,28 @@ public class ViewEmployer extends JPanel {
 
     this.revalidate();
     this.repaint();
+  }
+
+  protected void updateButtonPanel(String text) {
+    searchButtoPanel.removeAll();
+
+    int pos = 0;
+    for (int i = 0; i < (employers == null ? 0 : employers.length); i++) {
+      if (employers[i][1].contains(text.toUpperCase())) {
+        searchButtoPanel.add(getBottomComponent(employers[i][1].toUpperCase(), pos));
+        searchButtoPanel.add(new JButton());
+        pos++;
+      }
+    }
+
+    searchButtoPanel.setSize(500, (pos > 10 ? 10 : pos) * 30);
+    searchButtoPanel.setVisible(true);
+
+    this.repaint();
+  }
+
+  private JTextField getBottomComponent(String upperCase, int pos) {
+    return null;
   }
 
 }
