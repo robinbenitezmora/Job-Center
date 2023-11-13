@@ -3,9 +3,15 @@ package src;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -142,6 +148,53 @@ public class ViewEmployer extends JPanel {
     JScrollPane js_isTable = new JScrollPane(t_isTable);
     js_isTable.setBounds(175, 30, 600, 200);
     this.add(js_isTable);
+
+    this.revalidate();
+    this.repaint();
+  }
+
+  void searchResultsGUI(String searchText) {
+    this.removeAll();
+    this.add(newSearchButton);
+
+    DefaultListModel<String> searchResultsListModel = new DefaultListModel<String>();
+    for (int i = 0; i < employers.length; i++) {
+      searchResultsListModel.addElement(employers[i][1]);
+    }
+
+    String[] temp = new String[searchResultsListModel.getSize()];
+    searchResultsListModel.copyInto(temp);
+    Arrays.sort(temp);
+
+    searchResultsListModel = new DefaultListModel<String>();
+    for (int i = 0; i < temp.length; i++) {
+      searchResultsListModel.addElement(temp[i]);
+    }
+
+    JList<String> searchResultsList = new JList<String>(searchResultsListModel);
+    searchResultsList.setBackground(new Color(220, 220, 220));
+
+    ((DefaultListCellRenderer)searchResultsList.getCellRenderer().setHorizontalAlignment(SwingConstants.CENTER);
+    searchResultsList.setFixedCellHeight(35);
+    searchResultsList.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+          viewGUI((String) ((JList)e.getSource()).getSelectedValue());
+        }
+      }
+    });
+
+    MyScrollPane searchResultsScroll = new MyScrollPane(searchResultsList);
+    searchResultsScroll.setBounds(0, 40, 800, 200);
+    this.add(searchResultsScroll);
+
+    JLabel scrollBottomInfo = new JLabel("Double click on the person you want to select");
+    scrollBottomInfo.setBounds(searchResultsScroll.getX(), searchResultsScroll.getY() + searchResultsScroll.getHeight(), searchResultsScroll.getWidth(), 12);
+    scrollBottomInfo.setFont(new Font(Font.DIALOG, Font.ITALIC, 10));
+    scrollBottomInfo.setForeground(new Color(0, 180, 0));
+
+    this.add(scrollBottomInfo);
 
     this.revalidate();
     this.repaint();
