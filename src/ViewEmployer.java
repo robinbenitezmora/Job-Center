@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,22 +34,20 @@ public class ViewEmployer extends JPanel {
 
   private String[][] employers;
 
- public ViewEmployer() {
-  setLayout(null);
+  public ViewEmployer() {
+    setLayout(null);
 
-  newSearchButton = new JButton("New Search");
-  newSearchButton.setFocusPainted(false);
-  newSearchButton.setBounds(10, 535, 150, 30);
-  newSearchButton.setBackground(new Color(255, 255, 255));
-  newSearchButton.addActionListener(new ActionListener() {
-   @Override
-   public void actionPerformed(ActionEvent e) {
-    GUI();
-   }
-  });
-  GUI();
+    newSearchButton = new JButton("New Search");
+    newSearchButton.setFocusPainted(false);
+    newSearchButton.setBounds(10, 535, 150, 30);
+    newSearchButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+      }
+    });
+    this.add(newSearchButton);
 
-  void GUI() {
     this.removeAll();
     searchBoxText = new JTextField();
     searchBoxText.setBounds(250, 150, 420, 30);
@@ -70,6 +69,10 @@ public class ViewEmployer extends JPanel {
       public void actionPerformed(ActionEvent e) {
         searchButton.doClick();
       }
+
+      public void actionPerformed(ActionEvent e) {
+        // TODO: Implement the action to be performed when the searchBoxText is updated
+      }
     });
 
     this.add(searchBoxText);
@@ -81,6 +84,10 @@ public class ViewEmployer extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         searchResultsGUI(searchBoxText.getText().toUpperCase());
+      }
+
+      public void actionPerformed(ActionEvent e) {
+        // TODO: Implement the action to be performed when the search button is clicked
       }
     });
     this.add(searchButton);
@@ -221,8 +228,63 @@ public class ViewEmployer extends JPanel {
     this.repaint();
   }
 
-  private JTextField getBottomComponent(String upperCase, int pos) {
-    return null;
+  private Component getBottomComponent(String string, int position) {
+    Component comp = null;
+
+    if (string.equals("")) {
+
+      JButton button = new JButton("Choose");
+      button.setBounds(421, position * 29, 80, 28);
+      button.setName(string + position);
+      button.setFocusPainted(false);
+      button.setBackground(new Color(214, 214, 214));
+      button.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+          // TODO Auto-generated method stub
+          throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          int compIndex = Integer.parseInt(((JButton) e.getSource()).getName());
+          viewGUI(((JTextField) searchButtoPanel.getComponent(compIndex * 2)).getText());
+        }
+
+      });
+
+      comp = button;
+
+    } else {
+
+      JTextField tf = new JTextField(string);
+      tf.setHorizontalAlignment(SwingConstants.CENTER);
+      tf.setEditable(false);
+      tf.setBackground(new Color(238, 238, 238));
+      tf.setBorder(new LineBorder(Color.white));
+      tf.setBounds(0, position * 29, 420, 28);
+      tf.addMouseListener(new MouseAdapter() {
+        public void mouseExited(MouseEvent e) {
+          tf.setBackground(new Color(238, 238, 238));
+        }
+
+        public void mouseEntered(MouseEvent e) {
+          tf.setBackground(Color.WHITE);
+        }
+
+        public void mouseClicked(MouseEvent e) {
+          viewGUI(((JTextField) e.getSource()).getText());
+        }
+      });
+
+      comp = tf;
+
+    }
+
+    return comp;
   }
 
+  public void setEmployers(String[][] employers) {
+    this.employers = employers;
+  }
 }
