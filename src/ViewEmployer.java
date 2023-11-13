@@ -240,12 +240,7 @@ public class ViewEmployer extends JPanel {
       button.setBackground(new Color(214, 214, 214));
       button.addActionListener(new ActionListener() {
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-          // TODO Auto-generated method stub
-          throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-        }
 
-        @Override
         public void actionPerformed(ActionEvent e) {
           int compIndex = Integer.parseInt(((JButton) e.getSource()).getName());
           viewGUI(((JTextField) searchButtoPanel.getComponent(compIndex * 2)).getText());
